@@ -1,6 +1,11 @@
-﻿namespace Sheduler.Persistence;
+﻿using Microsoft.EntityFrameworkCore;
 
-public class DbInitializer
+namespace Sheduler.Persistence;
+
+public static class DbInitializer
 {
-    
+    public static void Initialize<T>(T context) where T : DbContext
+    {
+        context.Database.EnsureCreated();
+    }
 }

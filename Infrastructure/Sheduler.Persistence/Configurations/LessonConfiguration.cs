@@ -4,12 +4,14 @@ using Sheduler.Domain.Models;
 
 namespace Sheduler.Persistence.Configurations;
 
-public class TableConfiguration : IEntityTypeConfiguration<Lesson>
+public class LessonConfiguration : IEntityTypeConfiguration<Lesson>
 {
     public void Configure(EntityTypeBuilder<Lesson> builder)
     {
-        builder.HasKey(table => table.Id);
-        builder.HasIndex(table => table.Id).IsUnique();
-        builder.Property(table => table.Lessons).IsRequired();
+        builder.HasKey(lesson => lesson.Id);
+        builder.HasIndex(lesson => lesson.Id).IsUnique();
+        builder.Property(lesson => lesson.Title).IsRequired();
+        builder.Property(lesson => lesson.UserId).IsRequired();
+        builder.Property(lesson => lesson.DateTime).IsRequired();
     }
 }

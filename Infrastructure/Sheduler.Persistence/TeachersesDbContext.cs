@@ -8,9 +8,9 @@ using Sheduler.Persistence.Configurations;
 
 namespace Sheduler.Persistence;
 
-public class TeachersDbContext : DbContext, ITeacherDbContext
+public class TeachersesDbContext : DbContext, ITeachersDbContext
 {
-    public DbSet<Teacher?> Set()
+    public DbSet<Teacher> Set()
     {
         return base.Set<Teacher>();
     }
@@ -21,10 +21,10 @@ public class TeachersDbContext : DbContext, ITeacherDbContext
         base.OnModelCreating(builder);
     }
     
-    public async Task<Teacher?> FindTeacherAsync(Guid id)
+    public async Task<Teacher?> FindTeacherAsync(string name)
     {
-        Ensure.GreaterThan(id, Guid.Empty, "The id must be greater than zero", nameof(id));
+        Ensure.NotNull(name, string.Empty, nameof(name));
 
-        return await Set().FindAsync(id);
+        return await Set().FirstOrDefaultAsync(teacher => teacher.Name.Contains(name));
     }
 }

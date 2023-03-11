@@ -1,15 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sheduler.Application.Interfaces;
-using Sheduler.Domain.Core.Primitives.Entities;
+using Sheduler.Domain.Models;
 using Sheduler.Persistence.Configurations;
 
 namespace Sheduler.Persistence;
 
-public class TablesDbContext : DbContext, IDbContext<EntityGuid>
+public class LessonsDbContext : DbContext, ILessonsDbContext
 {
-    public DbSet<EntityGuid> Set()
+    public DbSet<Lesson> Set()
     {
-        return base.Set<EntityGuid>();
+        return base.Set<Lesson>();
     }
 
     protected override void OnModelCreating(ModelBuilder builder)
