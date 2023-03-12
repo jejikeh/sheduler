@@ -3,9 +3,9 @@ using Sheduler.Application.Queries.LessonQuery.GetLessonList;
 
 namespace Sheduler.Application.Queries.TeacherQuery.GetTeacherList;
 
-public class GetLessonListValidator : AbstractValidator<GetLessonListQuery>
+public class GetTeacherListValidator : AbstractValidator<GetTeacherListQuery>
 {
-    public GetLessonListValidator()
+    public GetTeacherListValidator()
     {
         RuleFor(query => query.UserId).NotEqual(Guid.Empty);
     }

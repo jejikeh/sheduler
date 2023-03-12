@@ -7,7 +7,7 @@ namespace Sheduler.Application.Queries.TeacherQuery.GetTeacherList;
 public class TeacherLookupDto : IMapWith<Teacher>
 {
     public Guid Id { get; set; }
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
     
     public void Mapping(Profile profile)
     {
