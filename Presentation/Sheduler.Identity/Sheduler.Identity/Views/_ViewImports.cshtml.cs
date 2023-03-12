@@ -1,12 +1,11 @@
-﻿$HEADER$using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace $NAMESPACE$
+namespace Sheduler.Identity.Views;
+
+public class _ViewImports : PageModel
 {
-    public class $CLASS$ : PageModel
+    public void OnGet()
     {
-        public void OnGet()
-        {
-	          $END$
-        }
+        
     }
 }
