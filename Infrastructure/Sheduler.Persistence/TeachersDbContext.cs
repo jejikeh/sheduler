@@ -8,8 +8,12 @@ using Sheduler.Persistence.Configurations;
 
 namespace Sheduler.Persistence;
 
-public class TeachersesDbContext : DbContext, ITeachersDbContext
+public class TeachersDbContext : DbContext, ITeachersDbContext
 {
+    public TeachersDbContext(DbContextOptions<TeachersDbContext> options) : base(options)
+    {
+    }
+
     public DbSet<Teacher> Set()
     {
         return base.Set<Teacher>();
@@ -24,7 +28,6 @@ public class TeachersesDbContext : DbContext, ITeachersDbContext
     public async Task<Teacher?> FindTeacherAsync(string name)
     {
         Ensure.NotNull(name, string.Empty, nameof(name));
-
         return await Set().FirstOrDefaultAsync(teacher => teacher.Name.Contains(name));
     }
 }
