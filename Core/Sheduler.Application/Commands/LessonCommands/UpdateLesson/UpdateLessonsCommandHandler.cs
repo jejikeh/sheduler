@@ -31,7 +31,6 @@ public class UpdateLessonsCommandHandler : IRequestHandler<UpdateLessonCommand>
         
         entity.Title = request.Title;
         entity.LessonType = request.LessonType;
-        entity.Teacher = teacher;
         entity.DateTime = request.DateTime;
 
         await _lessonsDbContext.SaveChangesAsync(cancellationToken);
