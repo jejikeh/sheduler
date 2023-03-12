@@ -1,29 +1,31 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Sheduler.Application.Commands.TeacherCommands.CreateTeacher;
-using Sheduler.Application.Commands.TeacherCommands.DeleteTeacher;
-using Sheduler.Application.Commands.TeacherCommands.UpdateTeacher;
-using Sheduler.Application.Queries.TeacherQuery.GetTeacherDetails;
-using Sheduler.Application.Queries.TeacherQuery.GetTeacherList;
+using Sheduler.Application.Commands.LessonCommands.CreateLesson;
+using Sheduler.Application.Commands.LessonCommands.DeleteLesson;
+using Sheduler.Application.Commands.LessonCommands.UpdateLesson;
+using Sheduler.Application.Queries.LessonQuery.GetLessonDetails;
+using Sheduler.Application.Queries.LessonQuery.GetLessonList;
 using Sheduler.WebApi.Infrastructure;
 using Sheduler.WebApi.Models;
 
 namespace Sheduler.WebApi.Controllers;
 
 [Route("api/[controller]")]
-public class TeacherController : ApiController
+public class LessonController : ApiController
 {
     private readonly IMapper _mapper;
 
-    public TeacherController(IMapper mapper)
+    public LessonController(IMapper mapper)
     {
         _mapper = mapper;
     }
     
     [HttpGet]
-    public async Task<ActionResult<TeacherListVm>> GetAll()
+    [Authorize]
+    public async Task<ActionResult<LessonListVm>> GetAll()
     {
-        var query = new GetTeacherListQuery()
+        var query = new GetLessonListQuery()
         {
             UserId = UserId
         };
@@ -33,9 +35,10 @@ public class TeacherController : ApiController
     }
     
     [HttpGet("{id}")]
-    public async Task<ActionResult<TeacherDetailsVm>> Get(Guid id)
+    [Authorize]
+    public async Task<ActionResult<LessonDetailsVm>> Get(Guid id)
     {
-        var query = new GetTeacherDetailsQuery()
+        var query = new GetLessonDetailsQuery()
         {
             UserId = UserId,
             Id = id
@@ -46,27 +49,30 @@ public class TeacherController : ApiController
     }
 
     [HttpPost]
-    public async Task<ActionResult<Guid>> Create([FromBody] CreateTeacherDto createTeacherDto)
+    [Authorize]
+    public async Task<ActionResult<Guid>> Create([FromBody] CreateLessonDto createLessonDto)
     {
-        var command = _mapper.Map<CreateTeacherCommand>(createTeacherDto);
+        var command = _mapper.Map<CreateLessonCommand>(createLessonDto);
         command.UserId = UserId;
         var teacherId = await Mediator.Send(command);
         return Ok(teacherId);
     }
     
     [HttpPut]
-    public async Task<ActionResult> Update([FromBody] UpdateTeacherDto updateTeacherDto)
+    [Authorize]
+    public async Task<ActionResult> Update([FromBody] UpdateLessonDto updateTeacherDto)
     {
-        var command = _mapper.Map<UpdateTeacherCommand>(updateTeacherDto);
+        var command = _mapper.Map<UpdateLessonCommand>(updateTeacherDto);
         command.UserId = UserId;
         await Mediator.Send(command);
         return NoContent();
     }
     
     [HttpDelete("{id}")]
+    [Authorize]
     public async Task<ActionResult> Delete(Guid id)
     {
-        var command = new DeleteTeacherCommand()
+        var command = new DeleteLessonCommand()
         {
             Id = id,
             UserId = UserId
