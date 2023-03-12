@@ -1,6 +1,8 @@
-﻿namespace Sheduler.Application.Queries.LessonQuery.GetLessonList;
+﻿using MediatR;
 
-public class GetLessonListQuery
+namespace Sheduler.Application.Queries.LessonQuery.GetLessonList;
+
+public class GetLessonListQuery : IRequest<LessonListVm>
 {
-    
+    public Guid UserId { get; set; }
 }

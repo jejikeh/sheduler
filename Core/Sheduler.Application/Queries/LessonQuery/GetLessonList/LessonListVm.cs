@@ -2,5 +2,5 @@
 
 public class LessonListVm
 {
-    
+    public IList<LessonLookupDto> Lessons { get; set; }
 }

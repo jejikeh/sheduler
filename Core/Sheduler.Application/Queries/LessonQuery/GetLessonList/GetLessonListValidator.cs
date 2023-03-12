@@ -1,6 +1,11 @@
-﻿namespace Sheduler.Application.Queries.LessonQuery.GetLessonList;
+﻿using FluentValidation;
 
-public class GetLessonListValidator
+namespace Sheduler.Application.Queries.LessonQuery.GetLessonList;
+
+public class GetLessonListValidator : AbstractValidator<GetLessonListQuery>
 {
-    
+    public GetLessonListValidator()
+    {
+        RuleFor(query => query.UserId).NotEqual(Guid.Empty);
+    }
 }
