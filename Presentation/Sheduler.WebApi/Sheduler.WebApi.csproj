@@ -2,8 +2,19 @@
 
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
+        <StartWorkingDirectory>$(MSBuildProjectDirectory)</StartWorkingDirectory>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Infrastructure\Sheduler.Persistence\Sheduler.Persistence.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.3" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0-preview.1.23110.8" />
+    </ItemGroup>
 
 </Project>
