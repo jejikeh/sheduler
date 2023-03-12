@@ -1,6 +1,18 @@
-﻿namespace Sheduler.WebApi.Models;
+﻿using AutoMapper;
+using Sheduler.Application.Commands.TeacherCommands.CreateTeacher;
+using Sheduler.Application.Common.Mappings;
 
-public class CreateTeacherDto
+namespace Sheduler.WebApi.Models;
+
+public class CreateTeacherDto : IMapWith<CreateTeacherCommand>
 {
+    public string Name { get; set; } = string.Empty;
     
+    public void Mapping(Profile profile)
+    {
+        profile.CreateMap<CreateTeacherDto, CreateTeacherCommand>()
+            .ForMember(
+                command => command.Name, 
+                expression => expression.MapFrom(expression => expression.Name));
+    }
 }
