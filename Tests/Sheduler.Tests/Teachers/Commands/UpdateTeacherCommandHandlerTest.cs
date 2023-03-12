@@ -1,24 +1,48 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sheduler.Application.Commands.TeacherCommands.CreateTeacher;
+using Sheduler.Application.Commands.TeacherCommands.DeleteTeacher;
+using Sheduler.Application.Common.Exceptions;
 using Sheduler.Tests.Common;
 
 namespace Sheduler.Tests.Teachers.Commands;
 
-public class CreateTeacherCommandHandlerTest : TestCommandBase
+public class UpdateTeacherCommandHandlerTest : TestCommandBase
 {
     [Fact]
-    public async Task CreateTeacherCommandHandler_Success()
+    public async Task UpdateTeacherCommandHandler_Success()
     {
-        var handler = new CreateTeacherCommandHandler(Context);
-        var teacherName = "Bazykov";
-        var createTeacherCommand = new CreateTeacherCommand()
+        var handler = new DeleteTeacherCommandHandler(Context);
+        var deleteTeacherCommand = new DeleteTeacherCommand()
         {
-            Name = teacherName,
+            Id = TeacherContextFactory.TeacherForDelete,
             UserId = TeacherContextFactory.UserAId
         };
 
-        var teacherId = await handler.Handle(createTeacherCommand, CancellationToken.None);
-        
-        Assert.NotNull(await Context.Set(). SingleOrDefaultAsync(teacher => teacher.Id == teacherId && teacher.Name == teacherName && teacher.UserId == TeacherContextFactory.UserAId));
+        await handler.Handle(deleteTeacherCommand, CancellationToken.None);
+        Assert.Null(await Context.Set(). SingleOrDefaultAsync(teacher => teacher.Id == TeacherContextFactory.TeacherForDelete));
+    }
+    
+    [Fact]
+    public async Task DeleteTeacherCommandHandler_FailOnWrongId()
+    {
+        var handler = new DeleteTeacherCommandHandler(Context);
+        await Assert.ThrowsAsync<NotFoundException>(async () => await handler.Handle(new DeleteTeacherCommand()
+            {
+                Id = Guid.NewGuid(),
+                UserId = TeacherContextFactory.UserAId
+            },
+            CancellationToken.None));
+    }
+    
+    [Fact]
+    public async Task DeleteTeacherCommandHandler_FailOnWrongUserId()
+    {
+        var handler = new DeleteTeacherCommandHandler(Context);
+        await Assert.ThrowsAsync<NotFoundException>(async () => await handler.Handle(new DeleteTeacherCommand()
+            {
+                Id = Guid.NewGuid(),
+                UserId = TeacherContextFactory.UserAId
+            },
+            CancellationToken.None));
     }
 }

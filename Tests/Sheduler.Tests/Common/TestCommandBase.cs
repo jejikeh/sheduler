@@ -1,6 +1,18 @@
-﻿namespace Sheduler.Tests.Common;
+﻿using Sheduler.Persistence;
 
-public class TestCommandBase
+namespace Sheduler.Tests.Common;
+
+public abstract class TestCommandBase : IDisposable
 {
+    protected readonly TeachersDbContext Context;
+
+    public TestCommandBase()
+    {
+        Context = TeacherContextFactory.Create();
+    }
     
+    public void Dispose()
+    {
+        TeacherContextFactory.Destroy(Context);
+    }
 }
