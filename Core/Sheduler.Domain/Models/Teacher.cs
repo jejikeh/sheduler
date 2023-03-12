@@ -7,7 +7,7 @@ public class Teacher : EntityGuid
     public Guid UserId;
     public string Name;
     
-    public Teacher(Guid userId,string name, Guid id) : base(id)
+    public Teacher(Guid userId, string name, Guid id) : base(id)
     {
         UserId = userId;
         Name = name;

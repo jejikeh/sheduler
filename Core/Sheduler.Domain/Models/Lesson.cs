@@ -12,10 +12,10 @@ public class Lesson : EntityGuid
     public LessonType LessonType { get; set; }
     public DateTime DateTime { get; set; }
 
-    public Lesson(Guid userId, string title, Teacher teacher, LessonType lessonType, DateTime dateTime, Guid id) : base(id)
+    public Lesson(Guid userId, string title,Teacher teacher, LessonType lessonType, DateTime dateTime, Guid id) : base(id)
     {
         Ensure.NotNull(teacher, "The teacher is required", nameof(teacher));
-        Ensure.NotNull(teacher, "The lessonType is required", nameof(lessonType));
+        Ensure.NotNull(lessonType, "The lessonType is required", nameof(lessonType));
 
         UserId = userId;
         Title = title;
