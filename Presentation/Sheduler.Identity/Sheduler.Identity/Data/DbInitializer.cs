@@ -1,6 +1,11 @@
-﻿namespace Sheduler.Identity.Data;
+﻿using Microsoft.EntityFrameworkCore;
 
-public class DbInitializer
+namespace Sheduler.Identity.Data;
+
+public static class DbInitializer
 {
-    
+    public static void Initialize<T>(T context) where T : DbContext
+    {
+        context.Database.EnsureCreated();
+    }
 }
