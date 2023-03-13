@@ -1,7 +1,7 @@
 ﻿using Sheduler.Domain.Models;
 using Sheduler.Persistence;
 
-namespace Sheduler.Tests.Common;
+namespace Sheduler.Tests.Common.TeacherRelated;
 
 public abstract class TestCommandTeacherBase
 {
@@ -9,13 +9,13 @@ public abstract class TestCommandTeacherBase
 
     public TestCommandTeacherBase()
     {
-        Context = DbContextFactory<TeachersDbContext, Teacher>.Create(
+        Context = DbContextFactory.Create<TeachersDbContext, Teacher>(
             options => new TeachersDbContext(options),
             TestDataCollection.Teachers);
     }
     
     public void Dispose()
     {
-        DbContextFactory<TeachersDbContext, Teacher>.Destroy(Context);
+        DbContextFactory.Destroy(Context);
     }
 }

@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using Sheduler.Application.Common.Interfaces;
 using Sheduler.Application.Common.Mappings;
 using Sheduler.Application.Interfaces;
 using Sheduler.Domain.Models;
 using Sheduler.Persistence;
 
-namespace Sheduler.Tests.Common;
+namespace Sheduler.Tests.Common.TeacherRelated;
 
 public class QueryTeacherTestFixture : IDisposable
 {
@@ -15,7 +13,7 @@ public class QueryTeacherTestFixture : IDisposable
 
     public QueryTeacherTestFixture()
     {
-        Context = DbContextFactory<TeachersDbContext, Teacher>.Create(
+        Context = DbContextFactory.Create<TeachersDbContext, Teacher>(
             options => new TeachersDbContext(options), 
             TestDataCollection.Teachers);
         var configurationProvider = new MapperConfiguration(conigure => 
@@ -25,7 +23,7 @@ public class QueryTeacherTestFixture : IDisposable
     
     public void Dispose()
     {
-        DbContextFactory<TeachersDbContext, Teacher>.Destroy(Context);
+        DbContextFactory.Destroy(Context);
     }
 }
 
