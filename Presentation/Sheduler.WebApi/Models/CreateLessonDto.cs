@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.ComponentModel.DataAnnotations;
+using AutoMapper;
 using Sheduler.Application.Commands.LessonCommands.CreateLesson;
 using Sheduler.Application.Common.Mappings;
 using Sheduler.Domain.Models.Types;
@@ -7,9 +8,12 @@ namespace Sheduler.WebApi.Models;
 
 public class CreateLessonDto : IMapWith<CreateLessonCommand>
 {
+    [Required]
     public string Title { get; set; } = string.Empty;
+    [Required]
     public string TeacherName { get; set; } = string.Empty;
     public LessonType LessonType { get; set; }
+    [Required]
     public DateTime DateTime { get; set; }
 
     public void Mapping(Profile profile)

@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.ComponentModel.DataAnnotations;
+using AutoMapper;
 using Sheduler.Application.Commands.TeacherCommands.UpdateTeacher;
 using Sheduler.Application.Common.Mappings;
 
@@ -6,6 +7,7 @@ namespace Sheduler.WebApi.Models;
 
 public class UpdateTeacherDto : IMapWith<UpdateTeacherCommand>
 {
+    [Required]
     public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
 
