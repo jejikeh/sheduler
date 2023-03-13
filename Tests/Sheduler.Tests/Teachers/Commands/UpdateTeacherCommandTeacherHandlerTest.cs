@@ -1,54 +1,32 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sheduler.Application.Commands.TeacherCommands.CreateTeacher;
 using Sheduler.Application.Commands.TeacherCommands.DeleteTeacher;
+using Sheduler.Application.Commands.TeacherCommands.UpdateTeacher;
 using Sheduler.Application.Common.Exceptions;
 using Sheduler.Domain.Models;
 using Sheduler.Persistence;
 using Sheduler.Tests.Common;
+using Sheduler.Tests.Common.TeacherRelated;
 
 namespace Sheduler.Tests.Teachers.Commands;
 
-public class UpdateTeacherCommandHandlerTest : TestCommandBase<TeachersDbContext, Teacher>
+public class UpdateTeacherCommandTeacherHandlerTest : TestCommandTeacherBase
 {
     [Fact]
     public async Task UpdateTeacherCommandHandler_Success()
     {
-        var handler = new DeleteTeacherCommandHandler(Context);
-        var deleteTeacherCommand = new DeleteTeacherCommand()
+        var handler = new UpdateTeacherCommandHandler(Context);
+        var updateTeacherCommand = new UpdateTeacherCommand()
         {
-            Id = DbContextFactory<TeachersDbContext, Teacher>.ForDelete,
-            UserId = DbContextFactory<TeachersDbContext, Teacher>.UserAId
+            Id = Guid.Parse("FC986B32-DA05-4F78-A737-DE48356E2F07"),
+            UserId = DbContextFactory.UserAId,
+            Name = "Andrew"
         };
 
-        await handler.Handle(deleteTeacherCommand, CancellationToken.None);
-        Assert.Null(await Context.Set(). SingleOrDefaultAsync(teacher => teacher.Id == DbContextFactory<TeachersDbContext, Teacher>.ForDelete));
-    }
-    
-    [Fact]
-    public async Task DeleteTeacherCommandHandler_FailOnWrongId()
-    {
-        var handler = new DeleteTeacherCommandHandler(Context);
-        await Assert.ThrowsAsync<NotFoundException>(async () => await handler.Handle(new DeleteTeacherCommand()
-            {
-                Id = Guid.NewGuid(),
-                UserId = DbContextFactory<TeachersDbContext, Teacher>.UserAId
-            },
-            CancellationToken.None));
-    }
-    
-    [Fact]
-    public async Task DeleteTeacherCommandHandler_FailOnWrongUserId()
-    {
-        var handler = new DeleteTeacherCommandHandler(Context);
-        await Assert.ThrowsAsync<NotFoundException>(async () => await handler.Handle(new DeleteTeacherCommand()
-            {
-                Id = Guid.NewGuid(),
-                UserId = DbContextFactory<TeachersDbContext, Teacher>.UserAId
-            },
-            CancellationToken.None));
-    }
-
-    public UpdateTeacherCommandHandlerTest(Func<DbContextOptions<TeachersDbContext>, TeachersDbContext> createContext, params Teacher[] entities) : base(createContext, entities)
-    {
+        await handler.Handle(updateTeacherCommand, CancellationToken.None);
+        Assert.NotNull(await Context.Set().SingleOrDefaultAsync(
+            teacher => 
+                teacher.Id == Guid.Parse("FC986B32-DA05-4F78-A737-DE48356E2F07") &&
+                teacher.Name == "Andrew"));
     }
 }

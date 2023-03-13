@@ -1,13 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using Sheduler.Application.Commands.TeacherCommands.CreateTeacher;
-using Sheduler.Domain.Models;
-using Sheduler.Persistence;
 using Sheduler.Tests.Common;
+using Sheduler.Tests.Common.TeacherRelated;
 
 namespace Sheduler.Tests.Teachers.Commands;
 
-public class CreateTeacherCommandHandlerTest : TestCommandBase<TeachersDbContext, Teacher>
+public class CreateTeacherCommandTeacherHandlerTest : TestCommandTeacherBase
 {
     [Fact]
     public async Task CreateTeacherCommandHandler_Success()
@@ -17,15 +15,12 @@ public class CreateTeacherCommandHandlerTest : TestCommandBase<TeachersDbContext
         var createTeacherCommand = new CreateTeacherCommand()
         {
             Name = teacherName,
-            UserId = DbContextFactory<TeachersDbContext, Teacher>.UserAId
+            UserId = DbContextFactory.UserAId
         };
 
         var teacherId = await handler.Handle(createTeacherCommand, CancellationToken.None);
         
-        Assert.NotNull(await Context.Set(). SingleOrDefaultAsync(teacher => teacher.Id == teacherId && teacher.Name == teacherName && teacher.UserId == DbContextFactory<TeachersDbContext, Teacher>.UserAId));
-    }
-
-    public CreateTeacherCommandHandlerTest(Func<DbContextOptions<TeachersDbContext>, TeachersDbContext> createContext, params Teacher[] entities) : base(createContext, entities)
-    {
+        Assert.NotNull(await Context.Set().SingleOrDefaultAsync(
+            teacher => teacher.Id == teacherId && teacher.Name == teacherName && teacher.UserId == DbContextFactory.UserAId));
     }
 }

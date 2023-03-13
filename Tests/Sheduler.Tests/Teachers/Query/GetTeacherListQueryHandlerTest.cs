@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
-using Sheduler.Application.Interfaces;
 using Sheduler.Application.Queries.TeacherQuery.GetTeacherList;
-using Sheduler.Domain.Models;
 using Sheduler.Persistence;
 using Sheduler.Tests.Common;
+using Sheduler.Tests.Common.TeacherRelated;
 using Shouldly;
 
-namespace Sheduler.Tests.Teachers.Commands;
+namespace Sheduler.Tests.Teachers.Query;
 
 [Collection("QueryCollection")]
 public class GetTeacherListQueryHandlerTest
@@ -27,7 +26,7 @@ public class GetTeacherListQueryHandlerTest
         var result = await handler.Handle(
             new GetTeacherListQuery()
             {
-                UserId = DbContextFactory<TeachersDbContext, Teacher>.UserAId
+                UserId = DbContextFactory.UserAId
             },
             CancellationToken.None);
 
