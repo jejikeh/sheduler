@@ -17,7 +17,7 @@ public class LessonConfiguration : IEntityTypeConfiguration<Lesson>
         builder.Property(lesson => lesson.Teacher)
             .HasConversion(
                  teacher => JsonSerializer.Serialize(teacher, JsonSerializerOptions.Default),
-                value => JsonSerializer.Deserialize<Teacher>(value, JsonSerializerOptions.Default));
+                value => JsonSerializer.Deserialize<Teacher>(value, new JsonSerializerOptions { IncludeFields = true}));
         builder.Property(lesson => lesson.LessonType)
             .HasConversion(
                 lessonType => lessonType.ToString(),
