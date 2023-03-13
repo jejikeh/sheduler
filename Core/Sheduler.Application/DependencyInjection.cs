@@ -14,5 +14,5 @@ public static class DependencyInjection
         serviceCollection.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         serviceCollection.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
         return serviceCollection;
-    }
+    }    
 }

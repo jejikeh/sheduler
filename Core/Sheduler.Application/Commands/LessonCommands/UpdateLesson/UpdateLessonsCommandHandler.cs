@@ -25,11 +25,18 @@ public class UpdateLessonsCommandHandler : IRequestHandler<UpdateLessonCommand>
         if (entity is null || entity.UserId != request.UserId )
             throw new NotFoundException(nameof(Lesson), request.Id);
 
-        var teacher = await _teachersDbContext.FindTeacherAsync(request.TeacherName);
-        if (teacher is null)
-            throw new NotFoundException(nameof(Teacher), request.TeacherName);
+        if (request.TeacherName == string.Empty)
+        {
+            var teacher = await _teachersDbContext.FindTeacherAsync(request.TeacherName);
+            if (teacher is null)
+                throw new NotFoundException(nameof(Teacher), request.TeacherName);
+            
+            entity.Teacher = teacher;
+        }
+
+        if(request.Title != string.Empty)
+            entity.Title = request.Title;
         
-        entity.Title = request.Title;
         entity.LessonType = request.LessonType;
         entity.DateTime = request.DateTime;
 
