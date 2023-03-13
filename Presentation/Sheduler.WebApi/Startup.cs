@@ -1,11 +1,14 @@
 ﻿using System.Reflection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.Extensions.Options;
 using Sheduler.Application;
 using Sheduler.Application.Common.Mappings;
 using Sheduler.Application.Interfaces;
 using Sheduler.Persistence;
 using Sheduler.WebApi.Middleware;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Sheduler.WebApi
 {
@@ -48,23 +51,40 @@ namespace Sheduler.WebApi
             });
             authentication.AddJwtBearer("Bearer", options =>
             {
-                options.Authority = "http://localhost:56163";
+                options.Authority = "http://localhost:44351";
                 options.Audience = "ShedulerWebApi";
                 options.RequireHttpsMetadata = false;
             });
+
+            services.AddVersionedApiExplorer(options => options.GroupNameFormat = "'v'VVV");
+            services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+            services.AddSwaggerGen();
+            services.AddApiVersioning();
         }
         
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
         {
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
 
+            app.UseSwagger();
+            app.UseSwaggerUI(config =>
+            {
+                foreach (var description in provider.ApiVersionDescriptions)
+                {
+                    config.SwaggerEndpoint(
+                        $"/swagger/{description.GroupName}/swagger.json", 
+                        description.GroupName.ToUpperInvariant());
+                    config.RoutePrefix = string.Empty;
+                }
+            });
             app.UseCustomExceptionHandler();
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseCors("AllowAll");
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseApiVersioning();
 
             app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
