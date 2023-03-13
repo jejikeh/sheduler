@@ -28,6 +28,6 @@ public class TeachersDbContext : DbContext, ITeachersDbContext
     public async Task<Teacher?> FindTeacherAsync(string name)
     {
         Ensure.NotNull(name, string.Empty, nameof(name));
-        return await Set().FirstOrDefaultAsync(teacher => teacher.Name.Contains(name));
+        return await Set().FirstOrDefaultAsync(teacher => teacher.Name.Equals(name));
     }
 }
