@@ -11,7 +11,9 @@ using Sheduler.WebApi.Models;
 
 namespace Sheduler.WebApi.Controllers;
 
-[Route("api/[controller]")]
+[ApiVersionNeutral]
+[Produces("application/json")]
+[Route("api/{version:apiVersion}/[controller]")]
 public class LessonController : ApiController
 {
     private readonly IMapper _mapper;
@@ -21,8 +23,20 @@ public class LessonController : ApiController
         _mapper = mapper;
     }
     
+    /// <summary>
+    /// Gets the list of lessons
+    /// </summary>
+    /// <remarks>
+    /// Sample request:
+    /// GET /lesson
+    /// </remarks>>
+    /// <returns>Returns LessonListVm</returns>
+    /// <response code="200">Success</response>
+    /// <response code="401">If the user is unathorized</response>
     [HttpGet]
     [Authorize]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<ActionResult<LessonListVm>> GetAll()
     {
         var query = new GetLessonListQuery()
