@@ -7,12 +7,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Core\Sheduler.Application\Sheduler.Application.csproj" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0-preview.1.23111.4" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.0-preview.1.23111.4" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="AutoMapper" Version="12.0.1" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.0-preview.1.23111.4" />
+      <ProjectReference Include="..\..\Core\Sheduler.Application\Sheduler.Application.csproj" />
+      <ProjectReference Include="..\..\Core\Sheduler.Domain\Sheduler.Domain.csproj" />
     </ItemGroup>
 
 </Project>
