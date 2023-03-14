@@ -3,14 +3,17 @@ using Sheduler.Application.Interfaces;
 
 namespace Sheduler.Application.Commands.TeacherCommands.DeleteTeacher;
 
-public class DeleteTeacherHandler : IRequestHandler<DeleteTeacherCommand>
+public class DeleteTeacherCommandHandler : IRequestHandler<DeleteTeacherCommand>
 {
     private readonly ITeacherRepository _teacherRepository;
-    
-    public DeleteTeacherHandler()
-    
-    public Task Handle(DeleteTeacherCommand request, CancellationToken cancellationToken)
+
+    public DeleteTeacherCommandHandler(ITeacherRepository teacherRepository)
     {
-        await 
+        _teacherRepository = teacherRepository;
+    }
+    
+    public async Task Handle(DeleteTeacherCommand request, CancellationToken cancellationToken)
+    {
+        await _teacherRepository.DeleteTeacher(request.Name, request.UserId);
     }
 }

@@ -2,7 +2,7 @@
 using Sheduler.Application.Interfaces;
 using Sheduler.Domain.Models;
 
-namespace Sheduler.Application.Commands.Teachers;
+namespace Sheduler.Application.Commands.TeacherCommands.CreateTeacher;
 
 public class CreateTeacherCommandHandler : IRequestHandler<CreateTeacherCommand, Teacher>
 {
@@ -15,13 +15,6 @@ public class CreateTeacherCommandHandler : IRequestHandler<CreateTeacherCommand,
     
     public async Task<Teacher> Handle(CreateTeacherCommand request, CancellationToken cancellationToken)
     {
-        var teacher = new Teacher()
-        {
-            Id = Guid.NewGuid(),
-            UserId = request.UserId,
-            Name = request.Name
-        };
-
-        return await _teacherRepository.CreateTeacher(teacher);
+        return await _teacherRepository.CreateTeacher(request.UserId, request.Name);
     }
 }

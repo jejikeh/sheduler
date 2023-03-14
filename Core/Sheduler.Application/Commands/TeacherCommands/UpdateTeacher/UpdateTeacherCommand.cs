@@ -1,10 +1,11 @@
 ﻿using MediatR;
+using Sheduler.Domain.Models;
 
 namespace Sheduler.Application.Commands.TeacherCommands.UpdateTeacher;
 
-public class UpdateTeacherCommand : IRequest
+public class UpdateTeacherCommand : IRequest<Teacher>
 {
-    public Guid Id { get; set; }
-    public Guid UserId { get; set; }
-    public string Name { get; set; }
+    public string TeacherName { get; set; }
+    public int UserId { get; set; }
+    public string NewName { get; set; } = string.Empty;
 }
