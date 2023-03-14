@@ -1,6 +1,9 @@
-﻿namespace Sheduler.Application.Queries.TeacherQueries.GetAllTeachers;
+﻿using MediatR;
+using Sheduler.Domain.Models;
 
-public class GetAllTeachersQuery
+namespace Sheduler.Application.Queries.TeacherQueries.GetAllTeachers;
+
+public class GetAllTeachersQuery : IRequest<ICollection<Teacher>>
 {
-    
+    public int UserId { get; set; }
 }
