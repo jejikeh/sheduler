@@ -1,6 +1,4 @@
-﻿using Sheduler.WebApi.Abstractions;
-
-namespace Sheduler.WebApi.Extensions;
+﻿namespace Sheduler.WebApi.Extensions;
 
 public static class ServiceMiddlewareExtension
 {
@@ -18,7 +16,6 @@ public static class ServiceMiddlewareExtension
         builder.Services
             .AddApplication()
             .AddPersistence(builder.Configuration);
-        
         return builder;
     }
     
@@ -37,17 +34,5 @@ public static class ServiceMiddlewareExtension
         }
 
         return app;
-    }
-
-    public static void RegisterEndpointDefinitions(this WebApplication app)
-    {
-        var endpointDefinitions = typeof(Program).Assembly
-            .GetTypes()
-            .Where(t => t.IsAssignableTo(typeof(IEndpointDefinition)) && t is { IsAbstract: true, IsInterface: false })
-            .Select(Activator.CreateInstance)
-            .Cast<IEndpointDefinition>();
-
-        foreach (var endpointDefinition in endpointDefinitions)
-            endpointDefinition.RegisterEndpoint(app);
     }
 }

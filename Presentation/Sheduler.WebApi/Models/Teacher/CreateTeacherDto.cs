@@ -4,13 +4,15 @@ using Sheduler.Application.Common.Mapping;
 
 namespace Sheduler.WebApi.Models.Teacher;
 
-public class CreteTeacherDto : IMapWith<CreateTeacherCommand>
+public class CreateTeacherDto : IMapWith<CreateTeacherCommand>
 {
     public string Name { get; set; }
 
     public void Mapping(Profile profile)
     {
-        profile.CreateMap<CreateTe, CreateTeacherCommand>()
-            
+        profile.CreateMap<CreateTeacherDto, CreateTeacherCommand>()
+            .ForMember(
+                command => command.Name,
+                expression => expression.MapFrom(dto => dto.Name));
     }
 }

@@ -1,6 +1,14 @@
-﻿namespace Sheduler.WebApi;
-
-public class GlobalUsings
-{
-    
-}
+﻿global using System.Reflection;
+global using AutoMapper;
+global using MediatR;
+global using Microsoft.AspNetCore.Mvc;
+global using Sheduler.Application;
+global using Sheduler.Application.Commands.TeacherCommands.CreateTeacher;
+global using Sheduler.Application.Commands.TeacherCommands.DeleteTeacher;
+global using Sheduler.Application.Commands.TeacherCommands.UpdateTeacher;
+global using Sheduler.Application.Common.Mapping;
+global using Sheduler.Application.Interfaces;
+global using Sheduler.Application.Queries.TeacherQueries.GetAllTeachers;
+global using Sheduler.Application.Queries.TeacherQueries.GetTeacherById;
+global using Sheduler.Persistence;
+global using Sheduler.WebApi.Models.Teacher;
