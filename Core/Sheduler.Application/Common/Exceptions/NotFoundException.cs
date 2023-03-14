@@ -1,8 +1,8 @@
 ﻿namespace Sheduler.Application.Common.Exceptions;
 
-public class NotFoundException : Exception
+public class NotFoundException<T> : Exception
 {
-    public NotFoundException(string name, object key) : base($"Entity {name}, ({key}) not found")
+    public NotFoundException(object key) : base($"Entity {nameof(T)}, ({key}) not found")
     {
     }
 }
